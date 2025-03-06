@@ -1,0 +1,183 @@
+units:
+  # Proxy Spacing Variables
+  kx: cx
+  ky: cy
+  # Padding Variables
+  px: kx + 2
+  py: ky + 2
+
+points:
+  zones:
+    main:
+      anchor: 
+        shift: [100, -100]
+      key:
+        padding: ky
+        spread: kx
+      columns:
+        pinky:
+        ring:
+          key.stagger: 5
+        middle:
+          key.stagger: 7
+        index:
+          key.stagger: -5
+        inner:
+          key.stagger: -3
+      rows:
+        bottom:
+        home:
+        top:
+    thumb:
+      key:
+        padding: ky
+        spread: kx
+      anchor:
+        ref: main_inner_bottom
+        shift: [-.5kx, -18]
+      rows:
+      columns:
+        inner:
+          key:
+            rotate: -15
+            pin: P21
+        home:
+          key:
+            width: 1.5kx
+            rotate: 90
+            splay: -35
+            stagger: -10
+            shift: [2,0]
+        outer:
+          key:
+            width: 1.5kx
+            rotate: 90
+            shift: [1,0]
+outlines:
+    board_outline:
+        -   what: polygon
+            fillet: 2
+            points:
+                -   ref: thumb_outer
+                    shift: [0.8cx, 0.6cy]
+                -   ref: thumb_outer
+                    shift: [0.8cx, -0.6cy]
+                -   ref: thumb_outer
+                    shift: [-0.8cx, -0.6cy]
+
+                -   ref: thumb_home
+                    shift: [-0.8cx, -0cy]
+
+                -   ref: main_pinky_bottom
+                    shift: [1.6cx, -0.6cy]
+                -   ref: main_pinky_bottom
+                    shift: [0.6cx, -0.6cy]
+                -   ref: main_pinky_bottom
+                    shift: [-0.6cx, -0.6cy]
+
+                -   ref: main_pinky_top
+                    shift: [-0.6cx, 0.6cy]
+                -   ref: main_pinky_top
+                    shift: [0.4cx, 0.6cy]
+
+                -   ref: main_ring_top
+                    shift: [-0.5cx, 0.6cy]
+                -   ref: main_ring_top
+                    shift: [0.4cx, 0.6cy]
+
+                -   ref: main_middle_top
+                    shift: [-0.5cx, 0.6cy]
+                -   ref: main_middle_top
+                    shift: [0.5cx, 0.6cy]
+
+                -   ref: main_index_top
+                    shift: [-0.4cx, 0.6cy]
+                -   ref: main_index_top
+                    shift: [0.5cx, 0.6cy]
+
+                -   ref: main_inner_top
+                    shift: [-0.4cx, 0.6cy]
+                -   ref: main_inner_top
+                    shift: [0.5cx, 0.6cy]
+
+                -   ref: main_inner_top
+                    shift: [0.6cx, 0.4cy]
+                -   ref: main_inner_top
+                    shift: [1.8cx, 0.4cy]
+
+                -   ref: main_inner_bottom
+                    shift: [1.8cx, -0.6cy]
+
+    _keycap_outlines:
+        -   what: rectangle
+            fillet: 2
+            where: true
+            size: [1cx - 0.5, 1cy - 0.5] # Choc keycaps are 17.5 x 16.5
+
+
+    preview:
+        -   what: outline
+            name: board_outline
+            operation: stack
+        -   what: outline
+            name: _keycap_outlines
+            operation: stack
+
+pcbs:
+  Tenebra:
+    outlines:
+      main:
+        outline: preview
+    footprints: 
+      controller:
+        what: mcu_nice_nano
+        where:
+          ref: main_inner_home
+        adjust:
+          shift: [22,6.5]
+        params:
+          reversible: true
+          reverse_mount: true
+      choc:
+        what: choc
+        where: true
+        params:
+          keycaps: true
+          reverse: true
+          hotswap: true
+          from: "main_pinky_top"
+          to: "main_thumb_outer"
+      battery:
+            what: battery_connector_jst_ph_2
+            where:
+                ref: main_inner_bottom
+                shift: [15, -5]
+                rotate: -90
+            params:
+                reversible: true
+      oled:
+          what: display_ssd1306
+          where:
+            ref: main_inner_home
+            shift: [22, 3]
+          params: 
+            reversible: true
+            SDA: P2
+            SCL: P3
+      battery_switch:
+          what: power_switch_smd_side
+          where:
+              ref: main_inner_bottom
+              shift: [30.5, -3]
+          params:
+              from: pos
+              to: RAW
+              reversible: true
+      horizontal_reset:
+          what: reset_switch_smd_side
+          where:
+              ref: main_inner_bottom
+              shift: [26.5, -14.5]
+              rotate: -125
+          params:
+            reversible: true
