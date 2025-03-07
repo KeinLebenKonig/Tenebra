@@ -40,7 +40,6 @@ points:
         inner:
           key:
             rotate: -15
-            pin: P21
         home:
           key:
             width: 1.5kx
@@ -127,7 +126,7 @@ pcbs:
   Tenebra:
     outlines:
       main:
-        outline: preview
+        outline: board_outline
     footprints: 
       controller:
         what: mcu_nice_nano
@@ -136,8 +135,32 @@ pcbs:
         adjust:
           shift: [22,6.5]
         params:
-          reversible: true
+          #reversible: true
           reverse_mount: true
+          include_extra_pins: true
+          P20: main_pinky_top
+          P5: main_pinky_home
+          P15: main_pinky_bottom
+
+          P8: main_ring_top
+          P7: main_ring_home
+          P6: main_ring_bottom
+
+          P21: main_middle_top
+          P18: main_middle_home
+          P14: main_middle_bottom
+
+          P9: main_index_top
+          P19: main_index_home
+          P10: main_index_bottom
+
+          P0: main_inner_top
+          P4: main_inner_home
+          P16: main_inner_bottom 
+
+          P107: thumb_inner
+          P102: thumb_home
+          P101: thumb_outer
       choc:
         what: choc
         where: true
@@ -145,8 +168,10 @@ pcbs:
           keycaps: true
           reverse: true
           hotswap: true
-          from: "main_pinky_top"
-          to: "main_thumb_outer"
+          #from: "main_pinky_top"
+          #to: "main_thumb_outer"
+          from: GND
+          to: "{{name}}"
       battery:
             what: battery_connector_jst_ph_2
             where:
