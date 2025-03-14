@@ -3,8 +3,11 @@ units:
   kx: cx
   ky: cy
   # Padding Variables
-  px: kx + 2
-  py: ky + 2
+  px: kx + 4
+  py: ky + 4
+
+#  pushX: (cx / 2)
+#  pushY: (cy / 2)
 
 points:
   zones:
@@ -52,6 +55,7 @@ points:
             width: 1.5kx
             rotate: 90
             shift: [1,0]
+
 outlines:
     board_outline:
         -   what: polygon
@@ -107,20 +111,138 @@ outlines:
                 -   ref: main_inner_bottom
                     shift: [1.8cx, -0.6cy]
 
-    _keycap_outlines:
-        -   what: rectangle
+    xl_board_outline:
+        -   what: polygon
+            expand: 3
             fillet: 2
-            where: true
-            size: [1cx - 0.5, 1cy - 0.5] # Choc keycaps are 17.5 x 16.5
+            points:
+                -   ref: thumb_outer
+                    shift: [0.8cx, 0.6cy]
+                -   ref: thumb_outer
+                    shift: [0.8cx, -0.6cy]
+                -   ref: thumb_outer
+                    shift: [-0.8cx, -0.6cy]
 
+                -   ref: thumb_home
+                    shift: [-0.8cx, -0cy]
 
-    preview:
-        -   what: outline
-            name: board_outline
-            operation: stack
-        -   what: outline
-            name: _keycap_outlines
-            operation: stack
+                -   ref: main_pinky_bottom
+                    shift: [1.6cx, -0.6cy]
+                -   ref: main_pinky_bottom
+                    shift: [0.6cx, -0.6cy]
+                -   ref: main_pinky_bottom
+                    shift: [-0.6cx, -0.6cy]
+
+                -   ref: main_pinky_top
+                    shift: [-0.6cx, 0.6cy]
+                -   ref: main_pinky_top
+                    shift: [0.4cx, 0.6cy]
+
+                -   ref: main_ring_top
+                    shift: [-0.5cx, 0.6cy]
+                -   ref: main_ring_top
+                    shift: [0.4cx, 0.6cy]
+
+                -   ref: main_middle_top
+                    shift: [-0.5cx, 0.6cy]
+                -   ref: main_middle_top
+                    shift: [0.5cx, 0.6cy]
+
+                -   ref: main_index_top
+                    shift: [-0.4cx, 0.6cy]
+                -   ref: main_index_top
+                    shift: [0.5cx, 0.6cy]
+
+                -   ref: main_inner_top
+                    shift: [-0.4cx, 0.6cy]
+                -   ref: main_inner_top
+                    shift: [0.5cx, 0.6cy]
+
+                -   ref: main_inner_top
+                    shift: [0.6cx, 0.4cy]
+                -   ref: main_inner_top
+                    shift: [1.8cx, 0.4cy]
+
+                -   ref: main_inner_bottom
+                    shift: [1.8cx, -0.6cy]
+
+    no_mcu_outline:
+        -   what: polygon
+            fillet: 2
+            points:
+                -   ref: thumb_outer
+                    shift: [0.8cx, 0.6cy]
+                -   ref: thumb_outer
+                    shift: [0.8cx, -0.6cy]
+                -   ref: thumb_outer
+                    shift: [-0.8cx, -0.6cy]
+
+                -   ref: thumb_home
+                    shift: [-0.8cx, -0cy]
+
+                -   ref: main_pinky_bottom
+                    shift: [1.6cx, -0.6cy]
+                -   ref: main_pinky_bottom
+                    shift: [-0.6cx, -0.6cy]
+
+                -   ref: main_pinky_top
+                    shift: [-0.6cx, 0.6cy]
+                -   ref: main_pinky_top
+                    shift: [0.4cx, 0.6cy]
+
+                -   ref: main_ring_top
+                    shift: [-0.5cx, 0.6cy]
+                -   ref: main_ring_top
+                    shift: [0.4cx, 0.6cy]
+
+                -   ref: main_middle_top
+                    shift: [-0.5cx, 0.6cy]
+                -   ref: main_middle_top
+                    shift: [0.5cx, 0.6cy]
+
+                -   ref: main_index_top
+                    shift: [-0.4cx, 0.6cy]
+                -   ref: main_index_top
+                    shift: [0.5cx, 0.6cy]
+
+                -   ref: main_inner_top
+                    shift: [-0.4cx, 0.6cy]
+                -   ref: main_inner_top
+                    shift: [0.6cx, 0.6cy]
+
+                -   ref: main_inner_bottom
+                    shift: [0.6cx, -0.7cy]
+
+    key_outline:
+            -   where: true
+                what: rectangle
+                size: [14, 14]
+    keycap_outline:
+            -   what: rectangle
+                fillet: 2
+                where: true
+                size: [1cx - 0.5, 1cy - 0.5]
+    board_preview:
+            -   what: outline
+                name: board_outline
+                operation: stack
+            -   what: outline
+                name: key_outline
+                operation: stack
+    case_plate_preview:
+            -   what: outline
+                name: no_mcu_outline
+                operation: stack
+            -   what: outline
+                name: key_outline
+                operation: stack
+    bottom_case_preview:
+            -   what: outline
+                name: board_outline
+                operation: stack
+            -   what: outline
+                name: xl_board_outline
+                operation: stack
 
 pcbs:
   Tenebra:
@@ -135,32 +257,28 @@ pcbs:
         adjust:
           shift: [22,6.5]
         params:
-          #reversible: true
-          reverse_mount: true
           include_extra_pins: true
-          P20: main_pinky_top
-          P5: main_pinky_home
-          P15: main_pinky_bottom
-
-          P8: main_ring_top
-          P7: main_ring_home
-          P6: main_ring_bottom
-
-          P21: main_middle_top
-          P18: main_middle_home
-          P14: main_middle_bottom
-
-          P9: main_index_top
-          P19: main_index_home
-          P10: main_index_bottom
-
           P0: main_inner_top
-          P4: main_inner_home
-          P16: main_inner_bottom 
+          P21: main_index_top
+          P20: main_middle_top
+          P4: main_ring_top
+          P5: main_pinky_top
 
-          P107: thumb_inner
+          P19: main_inner_home
+          P6: main_index_home
+          P18: main_middle_home
+          P7: main_ring_home
+          P15: main_pinky_home
+
+          P9: main_inner_bottom
+          P8: main_index_bottom
+          P14: main_middle_bottom
+          P16: main_ring_bottom
+          P10: main_pinky_bottom
+
+          P101: thumb_inner
           P102: thumb_home
-          P101: thumb_outer
+          P107: thumb_outer
       choc:
         what: choc
         where: true
@@ -168,32 +286,32 @@ pcbs:
           keycaps: true
           reverse: true
           hotswap: true
-          #from: "main_pinky_top"
-          #to: "main_thumb_outer"
           from: GND
           to: "{{name}}"
       battery:
             what: battery_connector_jst_ph_2
             where:
                 ref: main_inner_bottom
-                shift: [15, -5]
+                shift: [20, -10]
                 rotate: -90
             params:
                 reversible: true
       oled:
-          what: display_ssd1306
+          what: display_nice_view
           where:
             ref: main_inner_home
             shift: [22, 3]
           params: 
             reversible: true
-            SDA: P2
-            SCL: P3
+            invert_jumpers_position: true
+            MOSI: P3
+            SCK: P2
+            CS: P1
       battery_switch:
           what: power_switch_smd_side
           where:
               ref: main_inner_bottom
-              shift: [30.5, -3]
+              shift: [30.5, -5]
           params:
               from: pos
               to: RAW
@@ -206,3 +324,33 @@ pcbs:
               rotate: -125
           params:
             reversible: true
+#      topleftmount:
+#          what: mounting_hole
+#          where:
+#              ref: main_ring_home
+#              shift: [-pushX, pushY]
+#      botleftmount:
+#          what: mounting_hole
+#          where:
+#              ref: main_ring_bottom
+#              shift: [-pushX, -pushY]
+#      centermount:
+#          what: mounting_hole
+#          where:
+#              ref: main_middle_bottom
+#              shift: [pushX, pushY]
+#      toprightmount:
+#          what: mounting_hole
+#          where:
+#              ref: main_inner_top
+#              shift: [pushX, -pushY]
+#      botrightmount:
+#          what: mounting_hole
+#          where:
+#              ref: thumb_home
+#              shift: [pushX, pushY]
+
+cases:
+    plate:
+        -   name: case_plate_preview
+            extrude: 1.2
