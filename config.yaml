@@ -12,6 +12,9 @@ units:
 points:
   zones:
     main:
+      mirror: &mirror
+        ref: main_inner_home
+        disatance: 5kx
       anchor: 
         shift: [100, -100]
       key:
@@ -32,6 +35,7 @@ points:
         home:
         top:
     thumb:
+      mirror: *mirror
       key:
         padding: ky
         spread: kx
